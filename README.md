@@ -1,3 +1,5 @@
+![Wyrmx-logo](https://github.com/user-attachments/assets/b90e2b64-7af8-482b-84f0-d9b6aeebac5d)
+
 # 🐉 Wyrmx CLI
 
 **Wyrmx CLI** is the official command-line interface for [Wyrmx](https://github.com/Wyrmx) — a blazing-fast, Cython-accelerated, AI-enhanced web framework built on FastAPI.
