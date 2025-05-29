@@ -1,4 +1,5 @@
-![Wyrmx-logo](https://github.com/user-attachments/assets/b90e2b64-7af8-482b-84f0-d9b6aeebac5d)
+![Wyrmx-logo](https://github.com/user-attachments/assets/9aa1ec6b-1e2b-466e-8399-8044c60275c2)
+
 
 # 🐉 Wyrmx CLI
 
