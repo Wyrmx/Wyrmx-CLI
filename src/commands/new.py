@@ -1,5 +1,6 @@
 import subprocess
 import sys
+import textwrap
 import typer
 from pathlib import Path
 
@@ -23,6 +24,71 @@ def new(project_name: str):
             [sys.executable, "-m", "venv", str(projectPath)],
             check=True
         )
+    
+    def initializeDependencies(projectName: str):
+        typer.echo(f"Initialize Poetry & pyproject.toml...", )
+        projectPath = Path(projectName)
+
+        try:
+            subprocess.run(
+                ["poetry", "init", "--no-interaction"],
+                cwd=str(projectPath),
+                check=True
+            )
+
+        except FileNotFoundError:
+
+            typer.echo(
+                "Error: Poetry is not installed.\n"
+                "Install it with: `pip install poetry` or follow https://python-poetry.org/docs/#installation"
+            )
+            raise typer.Exit(1)
+        
+
+    
+    def updateGitignore(projectName: str):
+        gitignorePath = Path(projectName)/".gitignore"
+        gitignorePath.write_text(
+            textwrap.dedent("""\
+                # Python virtual environment
+                venv/
+                bin/
+                include/
+                lib/
+                lib64/
+                local/
+                pyvenv.cfg
+                .env
+
+                # Bytecode cache
+                **/__pycache__/**
+            """)
+        )
+    
+
+    def initSourceCode(projectName: str):
+        
+
+        def createSrc():
+            srcPath = Path(projectName)/"src"
+            srcPath.mkdir(parents=True, exist_ok=True)
+        
+            for folder in ["controllers", "services", "models"] : (srcPath/folder).mkdir(parents=True, exist_ok=True)
+        
+        def createEnv():
+
+            for file in [".env", ".env.example"] : 
+                path = Path(projectName) / file
+                path.write_text("")
+
+        createSrc()
+        createEnv()
+
+        
+            
+
+        
+
 
 
     """
@@ -32,5 +98,9 @@ def new(project_name: str):
 
 
     typer.echo(f"Initializing Wyrmx project: {projectName}")
+
     createProjectFolder(projectName)
     createVirtualEnvironment(projectName)
+    initializeDependencies(projectName)
+    updateGitignore(projectName)
+    initSourceCode(projectName)
