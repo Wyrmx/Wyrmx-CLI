@@ -62,10 +62,10 @@ dependencies = [
 ]
 
 [[tool.poetry.packages]]
-include = "src"
+include = "wyrmx"
 
 [tool.poetry.scripts]
-wyrmx = "src.main:app"
+wyrmx = "wyrmx.main:app"
 
 
 [build-system]
