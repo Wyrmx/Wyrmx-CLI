@@ -1,5 +1,5 @@
 import typer
-from src.commands import build, new
+from wyrmx.commands import build, new
 
 app = typer.Typer()
 

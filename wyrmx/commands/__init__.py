@@ -1,2 +1,2 @@
-import src.commands.build
-import src.commands.new
+import wyrmx.commands.build
+import wyrmx.commands.new
