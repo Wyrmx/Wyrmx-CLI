@@ -42,6 +42,12 @@ def new(project_name: str):
                 check=True
             )
 
+            for initialDependency in ["fastapi", "uvicorn"]: subprocess.run(
+                ["poetry", "add", initialDependency],
+                cwd=str(projectPath),
+                check=True
+            )
+
         except FileNotFoundError:
 
             typer.echo(
@@ -81,13 +87,25 @@ def new(project_name: str):
         
             for folder in ["controllers", "services", "models"] : (srcPath/folder).mkdir(parents=True, exist_ok=True)
         
+        def createMain():
+            mainPath = Path(projectName)/"src"/"main.py"
+
+            template = (
+                f"from fastapi import FastAPI\n\n"
+                f"app = FastAPI()"
+            )
+
+            mainPath.write_text(template)
+        
         def createEnv():
 
             for file in [".env", ".env.example"] : 
                 path = Path(projectName) / file
                 path.write_text("")
+        
 
         createSrc()
+        createMain()
         createEnv()
 
         
