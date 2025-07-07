@@ -2,9 +2,15 @@ import subprocess
 import sys
 import textwrap
 import typer
+
 from pathlib import Path
 
 def new(project_name: str):
+
+
+    """
+    Create a new Wyrmx project.
+    """
 
 
     def createProjectFolder(projectName: str):
@@ -12,7 +18,7 @@ def new(project_name: str):
 
         try:
             projectPath.mkdir(parents=True, exist_ok=False)
-            typer.echo(f"Created project folder: {projectPath.resolve()}")
+            typer.echo(f"Created project folder: {projectPath.resolve()} ✅")
         except FileExistsError:
             typer.echo(f"Error: Folder '{projectName}' already exists.")
 
@@ -26,7 +32,7 @@ def new(project_name: str):
         )
     
     def initializeDependencies(projectName: str):
-        typer.echo(f"Initialize Poetry & pyproject.toml...", )
+        typer.echo(f"Initializing Poetry & pyproject.toml...", )
         projectPath = Path(projectName)
 
         try:
@@ -91,9 +97,6 @@ def new(project_name: str):
 
 
 
-    """
-    Create a new Wyrmx project.
-    """
     projectName: str = project_name
 
 
