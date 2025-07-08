@@ -8,8 +8,13 @@ app.command()(build.build)
 app.command()(new.new)
 app.command()(run.run)
 
-app.command()(generate_controller.generate_controller)
-app.command()(generate_service.generate_service)
+app.command("generate:controller")(generate_controller.generate_controller)
+app.command("gc")(generate_controller.generate_controller)
+
+
+
+app.command("generate:service")(generate_service.generate_service)
+app.command("gs")(generate_service.generate_service)
 
 
 
