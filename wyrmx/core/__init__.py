@@ -1,0 +1,1 @@
+from wyrmx.core.app import WyrmxAPP
