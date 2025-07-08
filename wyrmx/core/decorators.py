@@ -1,6 +1,6 @@
 from typing import Any
 from fastapi import APIRouter
-from router import registerRouter
+from .router import registerRouter
 
 def singleton(cls):
     """
