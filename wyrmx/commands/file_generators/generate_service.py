@@ -29,7 +29,7 @@ def generate_service(name: str):
     template = (
         f"from wyrmx.core.decorators import service\n\n"
         f"@service\n"
-        f"class {serviceName}:\n"
+        f"class {serviceName}:\n\n"
         f"    def __init__(self):\n"
         f"        pass\n\n"
         f"    # Add your methods here\n"
