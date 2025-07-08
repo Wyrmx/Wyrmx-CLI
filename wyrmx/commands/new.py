@@ -31,7 +31,7 @@ def new(project_name: str):
             check=True
         )
     
-    def initializeDependencies(projectName: str):
+    def initDependencies(projectName: str):
         typer.echo(f"Initializing Poetry & pyproject.toml...", )
         projectPath = Path(projectName)
 
@@ -92,7 +92,7 @@ def new(project_name: str):
 
             template = (
                 f"from fastapi import FastAPI\n"
-                f"from wyrmx.router import bindRouters\n\n"
+                f"from wyrmx.core.router import bindRouters\n\n"
                 f"app = FastAPI()\n"
                 f"bindRouters(app)"
             )
@@ -112,7 +112,13 @@ def new(project_name: str):
 
         
             
+    def initGit(projectName: str):
 
+        subprocess.run(
+            ["git", "init"],
+            cwd=str(Path(projectName)),
+            check=True
+        )
         
 
 
@@ -124,6 +130,7 @@ def new(project_name: str):
 
     createProjectFolder(projectName)
     createVirtualEnvironment(projectName)
-    initializeDependencies(projectName)
+    initDependencies(projectName)
     updateGitignore(projectName)
     initSourceCode(projectName)
+    initGit(projectName)
