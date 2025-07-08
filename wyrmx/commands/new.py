@@ -91,10 +91,10 @@ def new(project_name: str):
             mainPath = Path(projectName)/"src"/"main.py"
 
             template = (
-                f"from fastapi import FastAPI\n"
-                f"from wyrmx.core.router import bindRouters\n\n"
-                f"app = FastAPI()\n"
-                f"bindRouters(app)"
+
+                f"from wyrmx.core import WyrmxAPP\n"
+                f"from . import app_module\n\n"
+                f"app = WyrmxAPP()"
             )
 
             mainPath.write_text(template)
