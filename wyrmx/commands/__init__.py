@@ -1,3 +1,4 @@
-import wyrmx.commands.build
-import wyrmx.commands.new
-import wyrmx.commands.run
+from wyrmx.commands.build import build
+from wyrmx.commands.new import new
+from  wyrmx.commands.run import run
+from wyrmx.commands.version import version, version_callback

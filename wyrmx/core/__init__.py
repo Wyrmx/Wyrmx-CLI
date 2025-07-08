@@ -1,2 +1,2 @@
 from wyrmx.core.app import WyrmxAPP
-import wyrmx.core.decorators 
+from wyrmx.core.decorators import controller, service, model, singleton
