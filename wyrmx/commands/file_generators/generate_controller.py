@@ -47,7 +47,7 @@ def generate_controller(name: str):
 
 
     template = (
-        f"from wyrmx.core.decorators import controller\n\n"
+        f"from wyrmx.core import controller\n\n"
         f"@controller('{controllerBasePath}')\n"
         f"class {controllerName}:\n\n"
         f"    def __init__(self):\n"
