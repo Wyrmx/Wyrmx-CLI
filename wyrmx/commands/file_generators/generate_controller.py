@@ -27,6 +27,19 @@ def generate_controller(name: str):
         if file.exists():
             typer.echo(f"❌ {fileType} '{filename}' already exists.")
             raise typer.Exit(1)
+    
+    def addImportToAppModule(controllerFilename: str, controllerName: str):
+        appModule = Path("src/app_module.py")
+        importLine = f"from .controllers.{controllerFilename} import {controllerName}\n"
+        with appModule.open("a") as f: f.write(importLine)
+
+
+
+
+
+
+
+        
         
     controllerBasePath = camelcase(name)
     controllerName = pascalCase(name)
@@ -50,6 +63,7 @@ def generate_controller(name: str):
     fileExists(controller, controllerFilename, "Controller")
 
     controller.write_text(template)
+    addImportToAppModule(controllerFilename, controllerName)
     typer.echo(f"✅ Created controller: {controller.resolve()}")
     
 

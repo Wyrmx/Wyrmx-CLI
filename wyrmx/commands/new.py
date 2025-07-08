@@ -87,6 +87,11 @@ def new(project_name: str):
         
             for folder in ["controllers", "services", "models"] : (srcPath/folder).mkdir(parents=True, exist_ok=True)
         
+        def createAppModule():
+            mainPath = Path(projectName)/"src"/"app_module.py"
+            mainPath.write_text("")
+
+        
         def createMain():
             mainPath = Path(projectName)/"src"/"main.py"
 
@@ -107,6 +112,7 @@ def new(project_name: str):
         
 
         createSrc()
+        createAppModule()
         createMain()
         createEnv()
 
