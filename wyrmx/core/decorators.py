@@ -12,9 +12,17 @@ def singleton(cls):
     return get_instance
 
 
-def controller(cls):
-    setattr(cls, "isController", True)
-    return singleton(cls)
+def controller(path: str):
+    """
+    Decorator to mark a class as a controller with a base route.
+    Also enforces singleton.
+    """
+    def decorator(cls):
+        setattr(cls, "isController", True)
+        setattr(cls, "basePath", path)
+        return singleton(cls)
+    
+    return decorator
 
 
 def service(cls):

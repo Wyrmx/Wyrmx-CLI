@@ -10,6 +10,10 @@ def generate_controller(name: str):
     Generate a new controller.
     """
 
+    def camelcase(name: str) -> str :
+        name = re.sub(r"[-_]", " ", name)
+        return "".join(word for word in name.split())
+
 
     def pascalCase(name: str) -> str:
         name = re.sub(r"[-_]", " ", name)
@@ -23,15 +27,16 @@ def generate_controller(name: str):
         if file.exists():
             typer.echo(f"❌ {fileType} '{filename}' already exists.")
             raise typer.Exit(1)
-    
+        
+    controllerBasePath = camelcase(name)
     controllerName = pascalCase(name)
     controllerFilename = snakeCase(name)
 
 
     template = (
         f"from wyrmx.core.decorators import controller\n\n"
-        f"@controller\n"
-        f"class {controllerName}:\n"
+        f"@controller('{controllerBasePath}')\n"
+        f"class {controllerName}:\n\n"
         f"    def __init__(self):\n"
         f"        pass\n\n"
         f"    # Add your methods here\n"
