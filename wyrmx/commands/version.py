@@ -1,10 +1,10 @@
 from pathlib import Path
-import toml
+import tomllib
 import typer
 
+__version__ = "1.0.13"
+
 def version(value: bool):
-    pyproject = Path(__file__).parent.parent.parent / "pyproject.toml"
-    parsed = toml.loads(pyproject.read_text())
-    typer.echo(f"Wyrmx CLI Version: {parsed["project"]["version"]}")
+    typer.echo(f"Wyrmx CLI Version: {__version__}")
     raise typer.Exit()
 
