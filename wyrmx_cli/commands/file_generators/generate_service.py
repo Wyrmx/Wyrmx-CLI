@@ -5,7 +5,7 @@ from pathlib import Path
 def generate_service(name: str):
 
     """
-    Generate a new service.
+    Generate a new service. (shortcut: gs)
     """
 
 

@@ -1,13 +1,12 @@
 from pathlib import Path
 import re
-
 import typer
 
 
 def generate_controller(name: str):
 
     """
-    Generate a new controller.
+    Generate a new controller. (shortcut: gc)
     """
 
     def camelcase(name: str) -> str :
