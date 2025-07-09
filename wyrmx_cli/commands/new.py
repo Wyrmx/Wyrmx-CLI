@@ -24,25 +24,49 @@ def new(project_name: str):
 
 
     def createVirtualEnvironment(projectName: str):
+
+        typer.echo(f"Initializing Poetry & pyproject.toml and creating virtual environment...", )
         projectPath = Path(projectName)
+
+        try :
+
+            commands = [
+                ["poetry", "init", "--no-interaction"],
+                ["poetry", "config", "virtualenvs.in-project", "true"],
+                ["poetry", "install"],
+            ]
+
+            for command in commands: subprocess.run(
+                command,
+                cwd=str(projectPath),
+                check=True
+
+            )
+        
+        except FileNotFoundError:
+
+            typer.echo(
+                "Error: Poetry is not installed.\n"
+                "Install it with: `pip install poetry` or follow https://python-poetry.org/docs/#installation"
+            )
+            raise typer.Exit(1)
+
+
+        '''projectPath = Path(projectName)
 
         subprocess.run(
             [sys.executable, "-m", "venv", str(projectPath)],
             check=True
-        )
+        )'''
     
     def initDependencies(projectName: str):
-        typer.echo(f"Initializing Poetry & pyproject.toml...", )
+        typer.echo(f"Installing initial dependencies...", )
+
         projectPath = Path(projectName)
 
         try:
-            subprocess.run(
-                ["poetry", "init", "--no-interaction"],
-                cwd=str(projectPath),
-                check=True
-            )
 
-            for initialDependency in ["fastapi", "uvicorn"]: subprocess.run(
+            for initialDependency in ["fastapi", "uvicorn", "wyrmx-core"]: subprocess.run(
                 ["poetry", "add", initialDependency],
                 cwd=str(projectPath),
                 check=True
@@ -97,7 +121,7 @@ def new(project_name: str):
 
             template = (
 
-                f"from wyrmx.core import WyrmxAPP\n"
+                f"from wyrmx_core import WyrmxAPP\n"
                 f"from . import app_module\n\n"
                 f"app = WyrmxAPP()"
             )

@@ -1,7 +1,6 @@
 import typer
-from typing import Optional
-from wyrmx.commands import build, new, run, version as ver
-from wyrmx.commands.file_generators import generate_controller, generate_service
+from wyrmx_cli.commands import build, new, run, version as ver
+from wyrmx_cli.commands.file_generators import generate_controller, generate_service
 
 app = typer.Typer()
 

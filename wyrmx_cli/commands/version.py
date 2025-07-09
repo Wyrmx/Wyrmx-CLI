@@ -1,7 +1,7 @@
 from pathlib import Path
 import typer
 
-__version__ = "1.0.19"
+__version__ = "1.0.20"
 
 def version():
     typer.echo(f"Wyrmx CLI Version: {__version__}")

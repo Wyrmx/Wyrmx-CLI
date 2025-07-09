@@ -4,6 +4,7 @@ lib
 dist
 lib64
 local
+.venv
 pyvenv.cfg
 
 **/__pycache__/**
