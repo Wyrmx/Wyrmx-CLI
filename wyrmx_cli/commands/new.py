@@ -33,7 +33,7 @@ def new(project_name: str):
             commands = [
                 ["poetry", "init", "--no-interaction"],
                 ["poetry", "config", "virtualenvs.in-project", "true"],
-                ["poetry", "install"],
+                ["poetry", "install", "--no-root"],
             ]
 
             for command in commands: subprocess.run(
@@ -52,13 +52,6 @@ def new(project_name: str):
             raise typer.Exit(1)
 
 
-        '''projectPath = Path(projectName)
-
-        subprocess.run(
-            [sys.executable, "-m", "venv", str(projectPath)],
-            check=True
-        )'''
-    
     def initDependencies(projectName: str):
         typer.echo(f"Installing initial dependencies...", )
 
@@ -87,7 +80,7 @@ def new(project_name: str):
         gitignorePath.write_text(
             textwrap.dedent("""\
                 # Python virtual environment
-                venv/
+                .venv/
                 bin/
                 include/
                 lib/
