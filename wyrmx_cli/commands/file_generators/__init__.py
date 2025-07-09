@@ -1,3 +1,4 @@
 from wyrmx_cli.commands.file_generators.generate_controller import generate_controller
 from wyrmx_cli.commands.file_generators.generate_service import generate_service
 from wyrmx_cli.commands.file_generators.generate_model import generate_model
+from wyrmx_cli.commands.file_generators.generate_schema import generate_schema
