@@ -1,5 +1,4 @@
 import subprocess
-import sys
 import textwrap
 import typer
 
@@ -32,7 +31,28 @@ def new(project_name: str):
 
             typer.echo(f"Created README default documentation ✅")
         except FileExistsError:
-            typer.echo(f"Error: Folder '{projectName}' already exists.")
+            typer.echo(f"Error: File '{str(readmeMarkdown)}' already exists.")
+    
+
+    def createAlembicIni(projectName: str):
+
+
+        try:
+            alembicIni = Path(projectName)/"alembic.ini"
+
+            template = (
+                f"[alembic]\n"
+                f"script_location = src/migrations\n"
+                f"sqlalchemy.url = postgresql://user:pass@host/db # or read from .env \n"
+            )
+
+            alembicIni.write_text(template)
+
+            typer.echo(f"Created Alembic ini file ✅")
+        except FileExistsError:
+            typer.echo(f"Error: File '{str(alembicIni)}' already exists.")
+
+
 
 
 
@@ -72,7 +92,7 @@ def new(project_name: str):
 
         try:
 
-            for initialDependency in ["fastapi", "uvicorn", "wyrmx-core"]: subprocess.run(
+            for initialDependency in ["fastapi", "uvicorn", "wyrmx-core", "alembic", "dotenv"]: subprocess.run(
                 ["poetry", "add", initialDependency],
                 cwd=str(projectPath),
                 check=True
@@ -115,7 +135,9 @@ def new(project_name: str):
             srcPath = Path(projectName)/"src"
             srcPath.mkdir(parents=True, exist_ok=True)
         
-            for folder in ["controllers", "services", "models"] : (srcPath/folder).mkdir(parents=True, exist_ok=True)
+            for folder in ["controllers", "services", "models", "schemas"] : (srcPath/folder).mkdir(parents=True, exist_ok=True)
+        
+
         
         def createAppModule():
             appModulePath = Path(projectName)/"src"/"app_module.py"
@@ -140,11 +162,35 @@ def new(project_name: str):
                 path = Path(projectName) / file
                 path.write_text("")
         
+        def createMigrationScript(): 
+
+            projectPath = Path(projectName)
+
+            subprocess.run(
+                ["poetry", "run","alembic", "init", "src/migrations"],
+                cwd=str(projectPath),
+                check=True
+            )
+
+            migrationScriptFile = projectPath / "src" / "migrations" / "env.py"
+            originalContent = migrationScriptFile.read_text()
+            migrationScriptFile.write_text(
+                "from wyrmx_core.db import DatabaseSchema\n" +
+                "import src.schemas\n" +
+                originalContent.replace("target_metadata = None", "target_metadata = DatabaseSchema.metadata")
+            )
+
+            typer.echo(f"Created Database Migration script ✅")
+            
+
+        
 
         createSrc()
         createAppModule()
         createMain()
         createEnv()
+        createMigrationScript()
+
 
         
             
@@ -166,6 +212,7 @@ def new(project_name: str):
 
     createProjectFolder(projectName)
     createReadmeMarkdown(projectName)
+    createAlembicIni(projectName)
     createVirtualEnvironment(projectName)
     initDependencies(projectName)
     updateGitignore(projectName)
