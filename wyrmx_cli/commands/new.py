@@ -23,6 +23,19 @@ def new(project_name: str):
             typer.echo(f"Error: Folder '{projectName}' already exists.")
 
 
+    
+    def createReadmeMarkdown(projectName: str):
+
+        try:
+            readmeMarkdown = Path(projectName)/"README.md"
+            readmeMarkdown.write_text("")
+
+            typer.echo(f"Created README default documentation ✅")
+        except FileExistsError:
+            typer.echo(f"Error: Folder '{projectName}' already exists.")
+
+
+
     def createVirtualEnvironment(projectName: str):
 
         typer.echo(f"Initializing Poetry & pyproject.toml and creating virtual environment...", )
@@ -105,8 +118,8 @@ def new(project_name: str):
             for folder in ["controllers", "services", "models"] : (srcPath/folder).mkdir(parents=True, exist_ok=True)
         
         def createAppModule():
-            mainPath = Path(projectName)/"src"/"app_module.py"
-            mainPath.write_text("")
+            appModulePath = Path(projectName)/"src"/"app_module.py"
+            appModulePath.write_text("")
 
         
         def createMain():
@@ -152,6 +165,7 @@ def new(project_name: str):
     typer.echo(f"Initializing Wyrmx project: {projectName}")
 
     createProjectFolder(projectName)
+    createReadmeMarkdown(projectName)
     createVirtualEnvironment(projectName)
     initDependencies(projectName)
     updateGitignore(projectName)
