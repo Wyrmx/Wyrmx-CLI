@@ -1,6 +1,6 @@
 [project]
 name = "wyrmx-cli"
-version = "1.0.20"
+version = "1.0.21"
 description = "Wyrmx CLI is the official command-line interface for Wyrmx — a blazing-fast, Cython-accelerated, AI-enhanced web framework built on FastAPI."
 authors = [
     {name = "Yousri Aouledissa",email = "aouledissayousri@gmail.com"}
@@ -24,7 +24,6 @@ dependencies = [
     "shellingham (>=1.5.4,<2.0.0)",
     "filelock (>=3.18.0,<4.0.0)",
     "distlib (>=0.3.9,<0.4.0)",
-
 ]
 
 [[tool.poetry.packages]]

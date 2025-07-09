@@ -12,7 +12,7 @@ def run(
     Run Wyrmx Server.
     """
     from pathlib import Path
-    import uvicorn, os, sys
+    import subprocess, os, sys
 
 
     projectRoot = Path.cwd()
@@ -20,7 +20,14 @@ def run(
 
     os.chdir(projectRoot)
     sys.path.insert(0, str(projectRoot))
-    uvicorn.run(app_module, host=host, port=port, reload=reload)
+    
+    #uvicorn.run(app_module, host=host, port=port, reload=reload)
+
+    subprocess.run(
+        ["uvicorn", app_module, "--host", host, "--port", str(port), "--reload" if reload else "--no-reload"],
+        cwd=str(projectRoot),
+        check=True
+    )
 
 
     
