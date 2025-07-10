@@ -1,5 +1,7 @@
 from pathlib import Path
-import re
+from wyrmx_cli.utilities.string_utilities import *
+from wyrmx_cli.utilities.file_utilities import *
+
 import typer
 
 
@@ -9,26 +11,10 @@ def generate_model(name: str):
     """
     Generate a new data model. (shortcut: gm)
     """
-
-
-    def pascalCase(name: str) -> str:
-        name = re.sub(r"[-_]", " ", name)
-        return "".join(word.capitalize() for word in name.split()) 
-    
-    def snakeCase(name: str) -> str:
-        name = re.sub(r"[-_]", " ", name)
-        return re.sub(r"(?<!^)(?=[A-Z])", "_", name).lower() + "_model"
     
 
-
-    def fileExists(file: Path, filename: str, fileType: str):
-        if file.exists():
-            typer.echo(f"❌ {fileType} '{filename}' already exists.")
-            raise typer.Exit(1)
-    
-
-    modelName = pascalCase(name)
-    modelFilename = snakeCase(name)
+    modelName = pascalcase(name)
+    modelFilename = snakecase(name)
 
 
     template = (

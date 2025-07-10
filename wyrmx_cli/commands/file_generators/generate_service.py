@@ -1,5 +1,8 @@
-import re, typer
 from pathlib import Path
+from wyrmx_cli.utilities.string_utilities import *
+from wyrmx_cli.utilities.file_utilities import *
+
+import typer
 
 
 def generate_service(name: str):
@@ -8,22 +11,8 @@ def generate_service(name: str):
     Generate a new service. (shortcut: gs)
     """
 
-
-    def pascalCase(name: str) -> str:
-        name = re.sub(r"[-_]", " ", name)
-        return "".join(word.capitalize() for word in name.split()) + "Service"
-    
-    def snakeCase(name: str) -> str:
-        name = re.sub(r"[-_]", " ", name)
-        return re.sub(r"(?<!^)(?=[A-Z])", "_", name).lower() + "_service"
-
-    def fileExists(file: Path, filename: str, fileType: str):
-        if file.exists():
-            typer.echo(f"❌ {fileType} '{filename}' already exists.")
-            raise typer.Exit(1)
-        
-    serviceName = pascalCase(name)
-    serviceFilename = snakeCase(name)
+    serviceName = pascalcase(name, "Service")
+    serviceFilename = snakecase(name, "_service")
 
 
     template = (

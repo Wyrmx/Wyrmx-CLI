@@ -3,6 +3,7 @@ import textwrap
 import typer
 
 from pathlib import Path
+from wyrmx_cli.utilities.file_utilities import insertLines, insertLine, replaceLines
 
 def new(project_name: str):
 
@@ -92,7 +93,7 @@ def new(project_name: str):
 
         try:
 
-            for initialDependency in ["fastapi", "uvicorn", "wyrmx-core", "alembic", "dotenv"]: subprocess.run(
+            for initialDependency in ["fastapi", "uvicorn", "wyrmx-core", "alembic", "python-dotenv"]: subprocess.run(
                 ["poetry", "add", initialDependency],
                 cwd=str(projectPath),
                 check=True
@@ -120,6 +121,7 @@ def new(project_name: str):
                 lib64/
                 local/
                 pyvenv.cfg
+                .db
                 .env
 
                 # Bytecode cache
@@ -161,6 +163,9 @@ def new(project_name: str):
             for file in [".env", ".env.example"] : 
                 path = Path(projectName) / file
                 path.write_text("")
+
+            insertLine(Path(projectName)/".env.example", 0, "DATABASE_URL='database url'")
+            insertLine(Path(projectName)/".env", 0, "DATABASE_URL=#database url")
         
         def createMigrationScript(): 
 
@@ -173,11 +178,22 @@ def new(project_name: str):
             )
 
             migrationScriptFile = projectPath / "src" / "migrations" / "env.py"
-            originalContent = migrationScriptFile.read_text()
-            migrationScriptFile.write_text(
-                "from wyrmx_core.db import DatabaseSchema\n" +
-                "import src.schemas\n" +
-                originalContent.replace("target_metadata = None", "target_metadata = DatabaseSchema.metadata")
+
+            insertLines(
+                migrationScriptFile,
+                {
+                    0: "from wyrmx_core.db import DatabaseSchema\n" + "from dotenv import load_dotenv\n ",
+                    9: "\nimport src.schemas\n" + "import os",
+                }
+            )
+
+            replaceLines(
+                migrationScriptFile,
+                {
+                   "target_metadata = None": "target_metadata = DatabaseSchema.metadata",
+                   'url = config.get_main_option("sqlalchemy.url")' : "\n",
+                   "url=url": "url=os.getenv('DATABASE_URL')"
+                }
             )
 
             typer.echo(f"Created Database Migration script ✅")
