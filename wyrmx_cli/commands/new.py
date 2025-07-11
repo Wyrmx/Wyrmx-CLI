@@ -18,9 +18,9 @@ def new(project_name: str):
 
         try:
             projectPath.mkdir(parents=True, exist_ok=False)
-            typer.echo(f"Created project folder: {projectPath.resolve()} ✅")
+            typer.secho(f"Created project folder: {projectPath.resolve()} ✅", fg="green")
         except FileExistsError:
-            typer.echo(f"Error: Folder '{projectName}' already exists.")
+            typer.secho(f"Error: Folder '{projectName}' already exists.", fg="red")
 
 
     
@@ -30,9 +30,9 @@ def new(project_name: str):
             readmeMarkdown = Path(projectName)/"README.md"
             readmeMarkdown.write_text("")
 
-            typer.echo(f"Created README default documentation ✅")
+            typer.secho(f"Created README default documentation ✅", fg="green")
         except FileExistsError:
-            typer.echo(f"Error: File '{str(readmeMarkdown)}' already exists.")
+            typer.secho(f"Error: File '{str(readmeMarkdown)}' already exists.", fg="red")
     
 
     def createAlembicIni(projectName: str):
@@ -71,9 +71,9 @@ def new(project_name: str):
 
             alembicIni.write_text(template)
 
-            typer.echo(f"Created Alembic ini file ✅")
+            typer.secho(f"Created Alembic ini file ✅", fg="green")
         except FileExistsError:
-            typer.echo(f"Error: File '{str(alembicIni)}' already exists.")
+            typer.secho(f"Error: File '{str(alembicIni)}' already exists.", fg="red")
 
 
 
@@ -81,7 +81,7 @@ def new(project_name: str):
 
     def createVirtualEnvironment(projectName: str):
 
-        typer.echo(f"Initializing Poetry & pyproject.toml and creating virtual environment...", )
+        typer.echo(f"Initializing Poetry & pyproject.toml and creating virtual environment...")
         projectPath = Path(projectName)
 
         try :
@@ -98,12 +98,15 @@ def new(project_name: str):
                 check=True
 
             )
+                
+            insertLine(projectPath / "pyproject.toml", 40, "\n\n" + "[tool.wyrmx]\n" + 'type = "project"')
         
         except FileNotFoundError:
 
-            typer.echo(
+            typer.secho(
                 "Error: Poetry is not installed.\n"
-                "Install it with: `pip install poetry` or follow https://python-poetry.org/docs/#installation"
+                "Install it with: `pip install poetry` or follow https://python-poetry.org/docs/#installation",
+                fg="red"
             )
             raise typer.Exit(1)
 
@@ -125,7 +128,8 @@ def new(project_name: str):
 
             typer.echo(
                 "Error: Poetry is not installed.\n"
-                "Install it with: `pip install poetry` or follow https://python-poetry.org/docs/#installation"
+                "Install it with: `pip install poetry` or follow https://python-poetry.org/docs/#installation",
+                fg="red"
             )
             raise typer.Exit(1)
         
@@ -205,9 +209,9 @@ def new(project_name: str):
                 migrationScriptFile,
                 {
                     0: "from wyrmx_core.db import DatabaseSchema\n" + "from dotenv import load_dotenv\n ",
-                    9: "\nfrom src.schemas import *\n" + "import os, sys\n\n" + "load_dotenv()\n" + "sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..'))\n",
+                    9: "import os, sys\n\n" + "sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..'))\n" + "\nfrom src.schemas import *\n\n" + "load_dotenv()\n" ,
                     29: "\n" + "config.set_main_option('sqlalchemy.url', os.getenv('DATABASE_URL'))\n"
-                }
+                } 
             )
 
             replaceLines(

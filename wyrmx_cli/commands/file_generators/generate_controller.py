@@ -45,7 +45,7 @@ def generate_controller(name: str):
     insertLine(controllerFolder/"__init__.py", 0, f"from src.controllers.{controllerFilename} import {controllerName}")
 
     addImportToAppModule(controllerFilename, controllerName)
-    typer.echo(f"✅ Created controller: {controller.resolve()}")
+    typer.secho(f"✅ Created controller: {controller.resolve()}", fg="green")
     
 
 

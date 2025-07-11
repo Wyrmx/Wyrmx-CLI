@@ -39,4 +39,4 @@ def generate_schema(name: str):
     createFile(schemaFolder/"__init__.py")
     insertLine(schemaFolder/"__init__.py", 0, f"from src.schemas.{schemaFilename} import {schemaName}")
 
-    typer.echo(f"✅ Created schema: {schema.resolve()}")
+    typer.secho(f"✅ Created schema: {schema.resolve()}", fg="green")

@@ -40,4 +40,4 @@ def generate_model(name: str):
     createFile(modelFolder/"__init__.py")
     insertLine(modelFolder/"__init__.py", 0, f"from src.models.{modelFilename} import {modelName}")
     
-    typer.echo(f"✅ Created model: {model.resolve()}")
+    typer.secho(f"✅ Created model: {model.resolve()}", fg="green")
