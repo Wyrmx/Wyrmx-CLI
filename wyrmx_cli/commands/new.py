@@ -44,7 +44,29 @@ def new(project_name: str):
             template = (
                 f"[alembic]\n"
                 f"script_location = src/migrations\n"
-                f"sqlalchemy.url = DRIVER://USERNAME:PASSWORD@HOST:PORT/DBNAME # or read from .env \n"
+                f"sqlalchemy.url = DRIVER://USERNAME:PASSWORD@HOST:PORT/DBNAME # or read from .env \n\n"
+
+                f"[loggers]\n"
+                f"keys = root\n\n"
+
+                f"[handlers]\n"
+                f"keys = console\n"
+
+                f"[formatters]\n"
+                f"keys = generic\n\n"
+
+                f"[logger_root]\n"
+                f"level = INFO\n"
+                f"handlers = console\n\n"
+
+                f"[handler_console]\n"
+                f"class = StreamHandler\n"
+                f"args = (sys.stdout,)\n"
+                f"level = NOTSET\n"
+                f"formatter = generic\n\n"
+
+                f"[formatter_generic]\n"
+                f"format = %(levelname)-5.5s [%(name)s] %(message)s\n"
             )
 
             alembicIni.write_text(template)
