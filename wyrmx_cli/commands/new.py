@@ -44,7 +44,7 @@ def new(project_name: str):
             template = (
                 f"[alembic]\n"
                 f"script_location = src/migrations\n"
-                f"sqlalchemy.url = postgresql://user:pass@host/db # or read from .env \n"
+                f"sqlalchemy.url = DRIVER://USERNAME:PASSWORD@HOST:PORT/DBNAME # or read from .env \n"
             )
 
             alembicIni.write_text(template)
@@ -121,7 +121,7 @@ def new(project_name: str):
                 lib64/
                 local/
                 pyvenv.cfg
-                .db
+                *.db
                 .env
 
                 # Bytecode cache
@@ -183,7 +183,8 @@ def new(project_name: str):
                 migrationScriptFile,
                 {
                     0: "from wyrmx_core.db import DatabaseSchema\n" + "from dotenv import load_dotenv\n ",
-                    9: "\nimport src.schemas\n" + "import os",
+                    9: "\nfrom src.schemas import *\n" + "import os, sys\n\n" + "load_dotenv()\n" + "sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..'))\n",
+                    29: "\n" + "config.set_main_option('sqlalchemy.url', os.getenv('DATABASE_URL'))\n"
                 }
             )
 

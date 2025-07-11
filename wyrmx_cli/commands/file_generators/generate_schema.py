@@ -14,13 +14,14 @@ def generate_schema(name: str):
     
 
     schemaName = pascalcase(name, "Schema")
-    schemaFilename = snakecase(name)
+    schemaFilename = snakecase(name, "_schema")
 
     
     template = (
+        f"from wyrmx_core.db import DatabaseSchema\n"
         f"from wyrmx_core import schema\n\n"
         f"@schema\n"
-        f"class {schemaName}:\n\n"
+        f"class {schemaName}(DatabaseSchema):\n\n"
         f"    __tablename__= '{pascalcase(name)}'\n\n"
         f"    #define columns here\n"
     )

@@ -1,15 +1,15 @@
 import typer
-from wyrmx_cli.commands import build, new, run, version as ver
-from wyrmx_cli.commands.file_generators import generate_controller, generate_service, generate_model, generate_schema
-from wyrmx_cli.commands.database_management import make_migration, migrate
+from wyrmx_cli import commands
+from wyrmx_cli.commands.file_generators import *
+from wyrmx_cli.commands.database_management import *
 
 app = typer.Typer()
 shortcuts = typer.Typer()
 
 
-app.command()(build)
-app.command()(new)
-app.command()(run)
+app.command()(commands.build)
+app.command()(commands.new)
+app.command()(commands.run)
 
 app.command("generate:controller")(generate_controller)
 app.command("generate:service")(generate_service)
@@ -28,8 +28,8 @@ app.command("gsc", hidden=True)(generate_schema)
 
 
 @app.callback(invoke_without_command=True)
-def main( version: bool = typer.Option( None, "--version", is_eager=True, help="Show the Wyrmx CLI version.")): 
-    if version: ver()
+def main( version: bool = typer.Option( None, "--version", "--v", is_eager=True, help="Show Wyrmx CLI version.")): 
+    if version: commands.version()
 
 
 if __name__ == "__main__":
