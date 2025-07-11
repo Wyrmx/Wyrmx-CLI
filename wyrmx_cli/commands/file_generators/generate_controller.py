@@ -1,6 +1,7 @@
 from pathlib import Path
 from wyrmx_cli.utilities.string_utilities import *
 from wyrmx_cli.utilities.file_utilities import *
+from wyrmx_cli.utilities.env_utilities import checkWorkspace
 
 import typer
 
@@ -16,7 +17,7 @@ def generate_controller(name: str):
         insertLine(Path("src/app_module.py"), 0, f"from .controllers.{controllerFilename} import {controllerName}\n")
 
 
-        
+    checkWorkspace()
         
     controllerBasename = camelcase(name)
     controllerName = pascalcase(name, "Controller")

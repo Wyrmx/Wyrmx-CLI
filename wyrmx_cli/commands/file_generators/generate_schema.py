@@ -1,4 +1,5 @@
 from pathlib import Path
+from wyrmx_cli.utilities.env_utilities import checkWorkspace
 from wyrmx_cli.utilities.string_utilities import *
 from wyrmx_cli.utilities.file_utilities import *
 
@@ -11,7 +12,7 @@ def generate_schema(name: str):
     Generate a new database schema. (shortcut: gsc)
     """
 
-    
+    checkWorkspace()    
 
     schemaName = pascalcase(name, "Schema")
     schemaFilename = snakecase(name, "_schema")

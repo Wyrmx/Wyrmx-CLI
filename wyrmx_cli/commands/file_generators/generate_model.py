@@ -1,6 +1,8 @@
 from pathlib import Path
 from wyrmx_cli.utilities.string_utilities import *
 from wyrmx_cli.utilities.file_utilities import *
+from wyrmx_cli.utilities.env_utilities import checkWorkspace
+
 
 import typer
 
@@ -12,6 +14,7 @@ def generate_model(name: str):
     Generate a new data model. (shortcut: gm)
     """
     
+    checkWorkspace()
 
     modelName = pascalcase(name)
     modelFilename = snakecase(name)
