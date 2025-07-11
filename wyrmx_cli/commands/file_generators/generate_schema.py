@@ -32,5 +32,10 @@ def generate_schema(name: str):
     schema = schemaFolder / f"{schemaFilename}.py"
     fileExists(schema, schemaFilename, "Schema")
 
+
     schema.write_text(template)
+
+    createFile(schemaFolder/"__init__.py")
+    insertLine(schemaFolder/"__init__.py", 0, f"from src.schemas.{schemaFilename} import {schemaName}")
+
     typer.echo(f"✅ Created schema: {schema.resolve()}")

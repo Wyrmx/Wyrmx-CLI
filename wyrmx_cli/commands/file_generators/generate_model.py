@@ -33,4 +33,8 @@ def generate_model(name: str):
     fileExists(model, modelFilename, "Model")
 
     model.write_text(template)
+
+    createFile(modelFolder/"__init__.py")
+    insertLine(modelFolder/"__init__.py", 0, f"from src.models.{modelFilename} import {modelName}")
+    
     typer.echo(f"✅ Created model: {model.resolve()}")

@@ -12,9 +12,8 @@ def generate_controller(name: str):
     """
     
     def addImportToAppModule(controllerFilename: str, controllerName: str):
-        appModule = Path("src/app_module.py")
-        importLine = f"from .controllers.{controllerFilename} import {controllerName}\n"
-        with appModule.open("a") as f: f.write(importLine)
+        createFile(Path("src/app_module.py"))
+        insertLine(Path("src/app_module.py"), 0, f"from .controllers.{controllerFilename} import {controllerName}\n")
 
 
         
@@ -33,7 +32,6 @@ def generate_controller(name: str):
         f"    # Add your methods here\n"
     )
 
-
     controllerFolder = Path().cwd() / "src" / "controllers"
     controllerFolder.mkdir(parents=True, exist_ok=True)
 
@@ -41,6 +39,10 @@ def generate_controller(name: str):
     fileExists(controller, controllerFilename, "Controller")
 
     controller.write_text(template)
+
+    createFile(controllerFolder/"__init__.py")
+    insertLine(controllerFolder/"__init__.py", 0, f"from src.controllers.{controllerFilename} import {controllerName}")
+
     addImportToAppModule(controllerFilename, controllerName)
     typer.echo(f"✅ Created controller: {controller.resolve()}")
     
