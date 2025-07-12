@@ -6,17 +6,21 @@ from wyrmx_cli.commands.database_management import *
 app = typer.Typer()
 shortcuts = typer.Typer()
 
-
+# main commands
 app.command()(commands.build)
 app.command()(commands.new)
 app.command()(commands.run)
 
+# file generation commands
 app.command("generate:controller")(generate_controller)
 app.command("generate:service")(generate_service)
 app.command("generate:model")(generate_model)
 app.command("generate:schema")(generate_schema)
+
+# database migration commands
 app.command("make:migration")(make_migration)
 app.command("migrate")(migrate)
+app.command("downgrade")(downgrade)
 
 
 # Aliases — hidden at root level
