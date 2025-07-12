@@ -18,9 +18,9 @@ def new(project_name: str):
 
         try:
             projectPath.mkdir(parents=True, exist_ok=False)
-            typer.secho(f"Created project folder: {projectPath.resolve()} ✅", fg="green")
+            typer.secho(f"Created project folder: {projectPath.resolve()} ✅", fg=typer.colors.GREEN)
         except FileExistsError:
-            typer.secho(f"Error: Folder '{projectName}' already exists.", fg="red")
+            typer.secho(f"Error: Folder '{projectName}' already exists.", fg=typer.colors.RED)
 
 
     
@@ -30,9 +30,9 @@ def new(project_name: str):
             readmeMarkdown = Path(projectName)/"README.md"
             readmeMarkdown.write_text("")
 
-            typer.secho(f"Created README default documentation ✅", fg="green")
+            typer.secho(f"Created README default documentation ✅", fg=typer.colors.GREEN)
         except FileExistsError:
-            typer.secho(f"Error: File '{str(readmeMarkdown)}' already exists.", fg="red")
+            typer.secho(f"Error: File '{str(readmeMarkdown)}' already exists.", fg=typer.colors.RED)
     
 
     def createAlembicIni(projectName: str):
@@ -71,9 +71,9 @@ def new(project_name: str):
 
             alembicIni.write_text(template)
 
-            typer.secho(f"Created Alembic ini file ✅", fg="green")
+            typer.secho(f"Created Alembic ini file ✅", fg=typer.colors.GREEN)
         except FileExistsError:
-            typer.secho(f"Error: File '{str(alembicIni)}' already exists.", fg="red")
+            typer.secho(f"Error: File '{str(alembicIni)}' already exists.", fg=typer.colors.RED)
 
 
 
@@ -106,7 +106,7 @@ def new(project_name: str):
             typer.secho(
                 "Error: Poetry is not installed.\n"
                 "Install it with: `pip install poetry` or follow https://python-poetry.org/docs/#installation",
-                fg="red"
+                fg=typer.colors.RED
             )
             raise typer.Exit(1)
 
@@ -129,7 +129,7 @@ def new(project_name: str):
             typer.echo(
                 "Error: Poetry is not installed.\n"
                 "Install it with: `pip install poetry` or follow https://python-poetry.org/docs/#installation",
-                fg="red"
+                fg=typer.colors.RED
             )
             raise typer.Exit(1)
         
