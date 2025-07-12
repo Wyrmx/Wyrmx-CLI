@@ -21,6 +21,7 @@ app.command("generate:schema")(generate_schema)
 app.command("migration:make")(make_migration)
 app.command("migration:apply")(migrate)
 app.command("migration:rollback")(rollback)
+app.command("migration:edit")(edit)
 
 
 # Aliases — hidden at root level

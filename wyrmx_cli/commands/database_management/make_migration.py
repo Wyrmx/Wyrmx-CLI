@@ -5,7 +5,7 @@ import subprocess, typer
 
 def make_migration(
     message: str = typer.Option(..., "-m", "--message", help="Migration message"),
-    empty: bool = typer.Option(False, "--empty", help="Empty migration")
+    empty: bool = typer.Option(False, "-e", "--empty", help="Empty migration")
 ):
 
     """

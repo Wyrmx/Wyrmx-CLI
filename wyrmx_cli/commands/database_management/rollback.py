@@ -4,7 +4,7 @@ import subprocess, typer
 
 def rollback(
     steps: int = typer.Option(None, "--steps", help="Number of rollback steps."),
-    revision: str = typer.Option(None, "--revision", help="Rollback to specific revision."),
+    revision: str = typer.Option(None, "--revision", "--migration", help="Rollback to specific revision."),
     base: bool = typer.Option(False, "--base", help="Rollback all the way down to initial schema.")
 ):
 

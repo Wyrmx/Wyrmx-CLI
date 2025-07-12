@@ -3,7 +3,7 @@ import subprocess, typer
 
 
 def migrate(
-    revision: str = typer.Option(None, "--revision", help="Migrate to specific revision."),
+    revision: str = typer.Option(None, "--revision", "--migration", help="Migrate to specific revision."),
 ): 
 
     """
