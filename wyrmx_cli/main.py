@@ -18,9 +18,9 @@ app.command("generate:model")(generate_model)
 app.command("generate:schema")(generate_schema)
 
 # database migration commands
-app.command("make:migration")(make_migration)
-app.command("migrate")(migrate)
-app.command("downgrade")(downgrade)
+app.command("migration:make")(make_migration)
+app.command("migration:apply")(migrate)
+app.command("migration:rollback")(rollback)
 
 
 # Aliases — hidden at root level
