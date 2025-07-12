@@ -76,7 +76,7 @@ def rollback(
 
     #if bool(steps) == bool(revision): typer.secho("[ERROR] Use either --steps or --revision (one required, not both).", fg=typer.colors.RED,)
 
-    if sum(bool(parameter) for parameter in [steps, revision, base]) != 1: typer.secho("[ERROR] Use exactly one option: --steps OR --revision OR --base.", fg=typer.colors.RED,)
+    if sum(bool(parameter) for parameter in [steps, revision, base]) > 1: typer.secho("[ERROR] Use exactly one option: --steps OR --revision OR --base.", fg=typer.colors.RED,)
     
     elif revision: rollbackToRevision(revision)
     elif base: rollbackToBase()
