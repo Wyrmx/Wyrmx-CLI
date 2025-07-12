@@ -1,11 +1,15 @@
+from pathlib import Path
+import subprocess
 
 
-
-
-def migrate(name: str): 
+def migrate(): 
 
     """
         Apply all pending database migrations.
     """
     
-    pass
+    subprocess.run(
+        ["alembic", "upgrade","head"],
+        cwd=str(Path().cwd()),
+        check=True
+    )
