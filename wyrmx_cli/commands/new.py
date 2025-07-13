@@ -140,7 +140,11 @@ def new(project_name: str):
             template = (
 
                 f"from wyrmx_core import WyrmxAPP\n"
+                f"from src.migrations.engine import SessionLocal\n"
+                f"from wyrmx_core.db import Model\n\n"
                 f"from . import app_module\n\n"
+                
+                f"Model.bindSession(SessionLocal)\n"
                 f"app = WyrmxAPP()"
             )
 

@@ -17,13 +17,16 @@ def generate_model(name: str):
     checkWorkspace()
 
     modelName = pascalcase(name)
-    modelFilename = snakecase(name)
+    modelFilename = snakecase(name, "_model")
 
 
     template = (
-        f"from wyrmx_core import model\n\n"
+        f"from wyrmx_core import model\n"
+        f"from wyrmx_core.db import Model\n\n"
         f"@model\n"
-        f"class {modelName}:\n\n"
+        f"class {modelName}(Model):\n\n"
+        f"    __schema__ = None #Bind the schema that corresponds to this model\n\n"
+
         f"    def __init__(self):\n"
         f"        pass\n\n"
         f"    # Add your methods here\n"
