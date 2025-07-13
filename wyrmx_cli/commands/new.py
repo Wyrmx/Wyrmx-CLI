@@ -187,10 +187,27 @@ def new(project_name: str):
                 }
             )
 
-            typer.echo(f"Created Database Migration script ✅")
+            typer.secho(f"Created Database Migration script ✅", fg=typer.colors.GREEN)
             
 
-        
+            databaseEngine = projectPath / "src" / "migrations" / "engine.py"
+
+            databaseEngine.write_text(
+                (
+                    f"from sqlalchemy import create_engine\n"
+                    f"from sqlalchemy.orm import sessionmaker, Session\n\n"
+
+                    f"import os\n\n"
+
+                    f"DBEngine = create_engine(os.getenv('DATABASE_URL'))\n"
+                    f"SessionLocal: sessionmaker[Session] = sessionmaker(autocommit=False, autoflush=False, bind=DBEngine)"
+                )
+            )
+
+
+            typer.secho(f"Created Database Engine ✅", fg=typer.colors.GREEN)
+
+
 
         createSrc()
         createAppModule()

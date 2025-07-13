@@ -37,6 +37,6 @@ def generate_service(name: str):
     service.write_text(template)
 
     createFile(serviceFolder/"__init__.py")
-    insertLine(serviceFolder/"__init__.py", 0, f"from src.controllers.{serviceFilename} import {serviceName}")
+    insertLine(serviceFolder/"__init__.py", 0, f"from src.services.{serviceFilename} import {serviceName}")
 
     typer.secho(f"✅ Created service: {service.resolve()}", fg=typer.colors.GREEN)
