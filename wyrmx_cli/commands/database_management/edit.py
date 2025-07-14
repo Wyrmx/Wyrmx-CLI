@@ -10,7 +10,7 @@ def edit(revision: str):
 
     try: 
         subprocess.run(
-            ["alembic", "edit", revision], 
+            ["poetry", "run","alembic", "edit", revision], 
             cwd=str(Path().cwd()), 
             stdin=None, stdout=None, stderr=None,
             #check=True, capture_output=True, text=True

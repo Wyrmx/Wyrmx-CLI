@@ -24,7 +24,7 @@ def run(
     #uvicorn.run(app_module, host=host, port=port, reload=reload)
 
     subprocess.run(
-        ["uvicorn", app_module, "--host", host, "--port", str(port), "--reload" if reload else "--no-reload"],
+        ["poetry", "run", "uvicorn", app_module, "--host", host, "--port", str(port), "--reload" if reload else "--no-reload"],
         cwd=str(projectRoot),
         check=True
     )

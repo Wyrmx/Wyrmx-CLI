@@ -18,7 +18,7 @@ def rollback(
             typer.secho(f"[INFO] Rolling back to base schema...", fg=typer.colors.YELLOW)
 
             subprocess.run(
-                ["alembic", "downgrade", "base"],
+                ["poetry", "run", "alembic", "downgrade", "base"],
                 cwd=str(Path().cwd()),
                 check=True,
                 capture_output=True,
@@ -37,7 +37,7 @@ def rollback(
             typer.secho(f"[INFO] Rolling back to revision {revision}...", fg=typer.colors.YELLOW)
 
             subprocess.run(
-                ["alembic", "downgrade", revision],
+                ["poetry", "run", "alembic", "downgrade", revision],
                 cwd=str(Path().cwd()),
                 check=True,
                 capture_output=True,
@@ -59,7 +59,7 @@ def rollback(
             for i in range(steps):
                 typer.secho(f"[INFO] Rolling back step {i+1} of {steps}...", fg=typer.colors.YELLOW)
                 result = subprocess.run(
-                    ["alembic", "downgrade","-1"],
+                    ["poetry", "run", "alembic", "downgrade","-1"],
                     cwd=str(Path().cwd()),
                     check=True,
                     capture_output=True,
