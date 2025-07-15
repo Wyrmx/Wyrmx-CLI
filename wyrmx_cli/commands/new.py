@@ -32,7 +32,7 @@ def new(project_name: str):
 
             typer.secho(f"Created README default documentation ✅", fg=typer.colors.GREEN)
         except FileExistsError:
-            typer.secho(f"Error: File '{str(readmeMarkdown)}' already exists.", fg=typer.colors.RED)
+            typer.secho(f"Error: File '{str(readmeMarkdown)}' already exists.", fg=typer.colors.RED) # type: ignore
     
 
     
@@ -91,7 +91,7 @@ def new(project_name: str):
             typer.echo(
                 "Error: Poetry is not installed.\n"
                 "Install it with: `pip install poetry` or follow https://python-poetry.org/docs/#installation",
-                fg=typer.colors.RED
+                fg=typer.colors.RED # type: ignore
             )
             raise typer.Exit(1)
         
@@ -178,7 +178,7 @@ def new(project_name: str):
                 {
                     0: "from wyrmx_core.db import DatabaseSchema\n" + "from dotenv import load_dotenv\n ",
                     9: "import os, sys\n\n" + "sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..'))\n" + "\nfrom src.schemas import *\n\n" + "load_dotenv()\n" ,
-                    29: "\n" + "config.set_main_option('sqlalchemy.url', os.getenv('DATABASE_URL', " "))\n"
+                    29: "\n" + "config.set_main_option('sqlalchemy.url', os.getenv('DATABASE_URL', ' '))\n"
                 } 
             )
 
@@ -187,8 +187,8 @@ def new(project_name: str):
                 {
                    "target_metadata = None": "target_metadata = DatabaseSchema.metadata",
                    'url = config.get_main_option("sqlalchemy.url")' : "\n",
-                   "url=url": "url=os.getenv('DATABASE_URL', " ")"
-                }
+                   "url=url": "url=os.getenv('DATABASE_URL', ' ')"
+                } 
             )
 
             typer.secho(f"Created Database Migration script ✅", fg=typer.colors.GREEN)
@@ -203,7 +203,7 @@ def new(project_name: str):
 
                     f"import os\n\n"
 
-                    f"DBEngine = create_engine(os.getenv('DATABASE_URL', " "))\n"
+                    f"DBEngine = create_engine(os.getenv('DATABASE_URL', ' '))\n"
                     f"SessionLocal: sessionmaker[Session] = sessionmaker(autocommit=False, autoflush=False, bind=DBEngine)"
                 )
             )
