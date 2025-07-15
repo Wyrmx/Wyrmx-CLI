@@ -80,7 +80,7 @@ def new(project_name: str):
 
         try:
 
-            for initialDependency in ["fastapi", "uvicorn", "wyrmx-core", "alembic", "python-dotenv"]: subprocess.run(
+            for initialDependency in ["fastapi", "uvicorn", "wyrmx-core", "alembic", "python-dotenv", "pyright"]: subprocess.run(
                 ["poetry", "add", initialDependency],
                 cwd=str(projectPath),
                 check=True
@@ -157,7 +157,7 @@ def new(project_name: str):
                 path.write_text("")
 
             insertLine(Path(projectName)/".env.example", 0, "DATABASE_URL='database url'")
-            insertLine(Path(projectName)/".env", 0, "DATABASE_URL=#database url")
+            insertLine(Path(projectName)/".env", 0, "DATABASE_URL=sqlite:///database.db")
         
         def createMigrationScript(): 
 
@@ -178,7 +178,7 @@ def new(project_name: str):
                 {
                     0: "from wyrmx_core.db import DatabaseSchema\n" + "from dotenv import load_dotenv\n ",
                     9: "import os, sys\n\n" + "sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..'))\n" + "\nfrom src.schemas import *\n\n" + "load_dotenv()\n" ,
-                    29: "\n" + "config.set_main_option('sqlalchemy.url', os.getenv('DATABASE_URL'))\n"
+                    29: "\n" + "config.set_main_option('sqlalchemy.url', os.getenv('DATABASE_URL', " "))\n"
                 } 
             )
 
@@ -187,7 +187,7 @@ def new(project_name: str):
                 {
                    "target_metadata = None": "target_metadata = DatabaseSchema.metadata",
                    'url = config.get_main_option("sqlalchemy.url")' : "\n",
-                   "url=url": "url=os.getenv('DATABASE_URL')"
+                   "url=url": "url=os.getenv('DATABASE_URL', " ")"
                 }
             )
 
@@ -203,7 +203,7 @@ def new(project_name: str):
 
                     f"import os\n\n"
 
-                    f"DBEngine = create_engine(os.getenv('DATABASE_URL'))\n"
+                    f"DBEngine = create_engine(os.getenv('DATABASE_URL', " "))\n"
                     f"SessionLocal: sessionmaker[Session] = sessionmaker(autocommit=False, autoflush=False, bind=DBEngine)"
                 )
             )

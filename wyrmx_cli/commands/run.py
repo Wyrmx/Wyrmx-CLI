@@ -21,10 +21,27 @@ def run(
     os.chdir(projectRoot)
     sys.path.insert(0, str(projectRoot))
     
-    #uvicorn.run(app_module, host=host, port=port, reload=reload)
+    '''subprocess.run(
+        ["poetry", "run", "pyright"],
+        cwd=str(projectRoot),
+        check=True
+    )
 
     subprocess.run(
         ["poetry", "run", "uvicorn", app_module, "--host", host, "--port", str(port), "--reload" if reload else "--no-reload"],
+        cwd=str(projectRoot),
+        check=True
+    )'''
+
+
+    subprocess.run(
+        [
+            "poetry",
+            "run",
+            "bash",
+            "-c",
+            f"pyright && uvicorn {app_module} --host {host} --port {port} {'--reload' if reload else '--no-reload'}"
+        ],
         cwd=str(projectRoot),
         check=True
     )

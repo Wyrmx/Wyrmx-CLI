@@ -1,6 +1,6 @@
 import typer
 
-__version__ = "1.0.67"
+__version__ = "1.0.68"
 
 def version():
     typer.echo(f"Wyrmx CLI Version: {__version__}")
