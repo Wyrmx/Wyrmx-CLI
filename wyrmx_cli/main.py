@@ -16,6 +16,8 @@ app.command("generate:controller")(generate_controller)
 app.command("generate:service")(generate_service)
 app.command("generate:model")(generate_model)
 app.command("generate:schema")(generate_schema)
+app.command("generate:payload")(generate_payload)
+app.command("generate:response")(generate_response)
 
 # database migration commands
 app.command("migration:make")(make_migration)
@@ -29,6 +31,8 @@ app.command("gc", hidden=True)(generate_controller)
 app.command("gs", hidden=True)(generate_service)
 app.command("gm", hidden=True)(generate_model)
 app.command("gsc", hidden=True)(generate_schema)
+app.command("gp", hidden=True)(generate_payload)
+app.command("gr", hidden=True)(generate_response)
 
 
 

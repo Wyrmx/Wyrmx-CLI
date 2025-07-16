@@ -2,5 +2,6 @@ import re
 
 
 def snakecase(name: str, suffix: str = "") -> str:
-    name = re.sub(r"[-_]", " ", name)
-    return re.sub(r"(?<!^)(?=[A-Z])", "_", name).lower() + suffix
+    name = re.sub(r"(?<!^)(?=[A-Z])", "_", name)
+    name = re.sub(r"[-\s]", "_", name)
+    return name.lower() + suffix

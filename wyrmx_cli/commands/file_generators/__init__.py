@@ -2,3 +2,5 @@ from wyrmx_cli.commands.file_generators.generate_controller import generate_cont
 from wyrmx_cli.commands.file_generators.generate_service import generate_service
 from wyrmx_cli.commands.file_generators.generate_model import generate_model
 from wyrmx_cli.commands.file_generators.generate_schema import generate_schema
+from wyrmx_cli.commands.file_generators.generate_payload import generate_payload
+from wyrmx_cli.commands.file_generators.generate_response import generate_response

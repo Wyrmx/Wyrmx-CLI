@@ -125,7 +125,7 @@ def new(project_name: str):
             srcPath = Path(projectName)/"src"
             srcPath.mkdir(parents=True, exist_ok=True)
         
-            for folder in ["controllers", "services", "models", "schemas"] : (srcPath/folder).mkdir(parents=True, exist_ok=True)
+            for folder in ["controllers", "services", "models", "schemas", "payloads", "responses"] : (srcPath/folder).mkdir(parents=True, exist_ok=True)
         
 
         
