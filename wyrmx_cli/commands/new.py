@@ -80,7 +80,7 @@ def new(project_name: str):
 
         try:
 
-            for initialDependency in ["fastapi", "uvicorn", "wyrmx-core", "alembic", "python-dotenv", "pyright"]: subprocess.run(
+            for initialDependency in ["fastapi", "uvicorn", "wyrmx-core", "alembic", "python-dotenv", "pyright", "pytest"]: subprocess.run(
                 ["poetry", "add", initialDependency],
                 cwd=str(projectPath),
                 check=True

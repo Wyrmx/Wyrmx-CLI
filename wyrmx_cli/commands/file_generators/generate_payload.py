@@ -17,8 +17,8 @@ def generate_payload(name: str):
 
     checkWorkspace()
 
-    payloadName = pascalcase(name, "Payload")
-    payloadFilename = snakecase(name, "_payload")
+    payloadName = pascalcase(name, suffix="Payload")
+    payloadFilename = snakecase(name, suffix="_payload")
 
 
     template = (

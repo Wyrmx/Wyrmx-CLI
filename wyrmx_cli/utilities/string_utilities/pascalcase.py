@@ -1,6 +1,6 @@
 import re
 
 
-def pascalcase(name: str, suffix: str = "") -> str:
+def pascalcase(name: str, prefix: str = "", suffix: str = "") -> str:
     name = re.sub(r"[-_]", " ", name)
-    return "".join(word.capitalize() for word in name.split()) + suffix
+    return prefix + "".join(word.capitalize() for word in name.split()) + suffix

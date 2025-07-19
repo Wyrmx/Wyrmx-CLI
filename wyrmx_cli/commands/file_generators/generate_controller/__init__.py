@@ -1,0 +1,1 @@
+from wyrmx_cli.commands.file_generators.generate_controller.generate_controller import generate_controller

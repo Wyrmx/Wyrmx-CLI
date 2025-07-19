@@ -15,8 +15,8 @@ def generate_service(name: str):
 
     checkWorkspace()
 
-    serviceName = pascalcase(name, "Service")
-    serviceFilename = snakecase(name, "_service")
+    serviceName = pascalcase(name, suffix="Service")
+    serviceFilename = snakecase(name, suffix="_service")
 
 
     template = (

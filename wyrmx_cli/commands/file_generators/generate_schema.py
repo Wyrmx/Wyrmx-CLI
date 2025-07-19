@@ -14,8 +14,8 @@ def generate_schema(name: str):
 
     checkWorkspace()    
 
-    schemaName = pascalcase(name, "Schema")
-    schemaFilename = snakecase(name, "_schema")
+    schemaName = pascalcase(name, suffix="Schema")
+    schemaFilename = snakecase(name, suffix="_schema")
 
     
     template = (

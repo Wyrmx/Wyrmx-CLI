@@ -1,6 +1,6 @@
 import re
 
 
-def camelcase(name: str, suffix: str = "") -> str :
+def camelcase(name: str, prefix: str = "", suffix: str = "") -> str :
     name = re.sub(r"[-_]", " ", name)
-    return "".join(word for word in name.split()) + suffix
+    return prefix + "".join(word for word in name.split()) + suffix

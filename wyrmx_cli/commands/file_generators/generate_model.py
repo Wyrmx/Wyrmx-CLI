@@ -17,7 +17,7 @@ def generate_model(name: str):
     checkWorkspace()
 
     modelName = pascalcase(name)
-    modelFilename = snakecase(name, "_model")
+    modelFilename = snakecase(name, suffix="_model")
 
 
     template = (

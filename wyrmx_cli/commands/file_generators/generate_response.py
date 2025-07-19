@@ -16,8 +16,8 @@ def generate_response(name: str):
 
     checkWorkspace()
 
-    responseName = pascalcase(name, "Response")
-    responseFilename = snakecase(name, "_response")
+    responseName = pascalcase(name, suffix="Response")
+    responseFilename = snakecase(name, suffix="_response")
 
 
     template = (
