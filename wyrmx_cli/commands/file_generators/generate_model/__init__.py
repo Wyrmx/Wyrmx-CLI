@@ -1,0 +1,1 @@
+from wyrmx_cli.commands.file_generators.generate_model.generate_model import generate_model

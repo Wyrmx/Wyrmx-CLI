@@ -10,6 +10,7 @@ shortcuts = typer.Typer()
 app.command()(commands.build)
 app.command()(commands.new)
 app.command()(commands.run)
+app.command()(commands.test)
 
 # file generation commands
 app.command("generate:controller")(generate_controller)
