@@ -103,6 +103,7 @@ def new(project_name: str):
             textwrap.dedent("""\
                 # Python virtual environment
                 .venv/
+                .pytest_cache/
                 bin/
                 include/
                 lib/
@@ -198,10 +199,13 @@ def new(project_name: str):
 
             databaseEngine.write_text(
                 (
+                    f"from dotenv import load_dotenv\n"
                     f"from sqlalchemy import create_engine\n"
                     f"from sqlalchemy.orm import sessionmaker, Session\n\n"
 
                     f"import os\n\n"
+
+                    f"load_dotenv()\n\n"
 
                     f"DBEngine = create_engine(os.getenv('DATABASE_URL', ' '))\n"
                     f"SessionLocal: sessionmaker[Session] = sessionmaker(autocommit=False, autoflush=False, bind=DBEngine)"

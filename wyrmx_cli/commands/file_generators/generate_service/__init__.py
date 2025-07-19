@@ -1,0 +1,1 @@
+from wyrmx_cli.commands.file_generators.generate_service.generate_service import generate_service
