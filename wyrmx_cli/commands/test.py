@@ -1,12 +1,18 @@
 from pathlib import Path
-import subprocess, os, sys
+from typing import Annotated, List, Optional
+
+import subprocess, os, sys, typer
+
 
 
 def test(
-    app_module: str = "src.main:app",
-    host: str = "127.0.0.1",
-    port: int = 8000,
-    reload: bool = True
+    controller: bool = typer.Option(False, "--controller", help="Run controller tests only."),
+    service: bool = typer.Option(False, "--service", help="Run service tests only."),
+    model: bool = typer.Option(False, "--model", help="Run model tests only."),
+
+    extra_args: Optional[List[str]] = typer.Argument(
+        None, help="Extra arguments to pass to pytest (e.g. -v, -k test_x)"
+    )
 ):
     
     """
@@ -22,13 +28,29 @@ def test(
     env = os.environ.copy()
     env["PYTHONPATH"] = "."
 
-    subprocess.run(
-        [
-            "poetry",
-            "run",
-            "pytest"
-        ],
-        cwd=str(projectRoot),
-        env=env,
-        check=True
-    )
+
+    command = ["poetry", "run", "pytest", *__extendCommand(controller, service, model)]
+    if extra_args: command.extend(extra_args)
+  
+    subprocess.run(command, cwd=str(projectRoot), env=env, check=True)
+
+
+
+def __extendCommand(
+    controller: bool,
+    service: bool,
+    model: bool
+
+)->list[str]:
+    
+    testPaths: list[str] = []
+
+    match (controller, service, model):
+        case (True, False, False): testPaths.append("src/controllers")
+        case (False, True, False): testPaths.append("src/services")
+        case (False, False, True): testPaths.append("src/models")
+        case (False, False, False): return testPaths
+
+        case _: raise typer.BadParameter("Please select only one of: --controller, --service or --model.")
+
+    return testPaths
