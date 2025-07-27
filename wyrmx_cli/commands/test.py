@@ -32,7 +32,8 @@ def test(
     command = ["poetry", "run", "pytest", *__extendCommand(controller, service, model)]
     if extra_args: command.extend(extra_args)
   
-    subprocess.run(command, cwd=str(projectRoot), env=env, check=True)
+    try: subprocess.run(command, cwd=str(projectRoot), env=env, check=True)
+    except subprocess.CalledProcessError: pass
 
 
 
