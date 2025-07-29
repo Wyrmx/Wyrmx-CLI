@@ -38,11 +38,14 @@ def __createModelTestFile(name: str, serviceFolder: Path):
 
     template = (
         f"import pytest\n"
+        f"from wyrmx_core.db import Model\n"
         f"from src.models.{modelFilename}.{modelFilename} import {modelName}\n\n"
 
         f"class {testModelName}:\n\n"
         f"    @pytest.fixture(autouse=True)\n"
-        f"    def setup(self): self.service = {modelName}()"
+        f"    def setup(self, db_session): \n"
+        f"        Model.bindSession(db_session)\n"
+        f"        self.model = {modelName}()"
     )
 
     testModel = serviceFolder / f"{testModelFilename}.py"

@@ -3,26 +3,91 @@
 
 # 🐉 Wyrmx CLI
 
-**Wyrmx CLI** is the official command-line interface for [Wyrmx](https://github.com/Wyrmx) — a blazing-fast, Cython-accelerated, AI-enhanced web framework built on FastAPI.
+**Wyrmx CLI** is the official command-line interface for **Wyrmx** — a modern, AI-assisted web framework built on **FastAPI** and **Uvicorn**.  
 
-This CLI lets you scaffold, generate, and manage powerful Wyrmx-based projects using both structured commands and natural language prompts. Whether you're building REST APIs, full-stack apps, or microservices, Wyrmx CLI brings speed, intelligence, and automation to your terminal.
+With Wyrmx CLI, you can scaffold, generate, and manage full-stack or microservice projects without the usual setup headaches. From controllers and services to models and schemas, everything is automated so you can focus on building your application, not boilerplate.  
 
 ---
 
-## 🚀 Features
+## 📋 Prerequisites  
+Before installing Wyrmx CLI, make sure you have:  
+- **Python 3.13** installed  
+- **pipx** (to install Wyrmx CLI globally)  
+- **Poetry** installed globally (for dependency management)  
 
-- 🧠 **Prompt-to-Code Generation**  
-  Generate endpoints, models, and more by simply describing them in natural language.
+---
 
-- ⚙️ **Project Scaffolding**  
-  Create full Wyrmx project structures with Cython and FastAPI in seconds.
+## ⚡ Installation  
 
-- 🛠 **Modular Code Generation**  
-  Add routes, services, and components via CLI prompts or flags.
 
-- 🔌 **LLM Integration**  
-  Connect to OpenAI, Anthropic, Mistral, or local LLMs via API to power code generation.
+Install Wyrmx CLI globally with:  
 
-- 📦 **Build & Deploy**  
-  Compile Cython modules, manage environments, and optimize your app for deployment.
+```bash
+pipx install wyrmx-cli
+```
 
+Verify installation
+
+```bash
+wyrmx --help
+```
+
+## ✨ Quick Start  
+
+Create a new project:
+
+```bash 
+wyrmx new <project-name>
+cd <project-name>
+```
+
+Generate Common modules: 
+
+```bash 
+# Controllers / Services / Models / Schemas
+
+wyrmx generate:controller <controller-name> 
+wyrmx generate:service <service-name>
+wyrmx generate:model <model-name>
+wyrmx generate:schema <schema-name>
+```
+
+Run the server:
+
+```bash
+wyrmx run # defaults to http://127.0.0.1:8000
+```
+
+##  🚀 Features
+
+###  🧠 AI-Enhanced Code Generation (in development)
+
+Integrates LLMs via MCP to generate boilerplate directly in your project—no copy-pasting from chat windows.
+
+###  ⚙️ Project Scaffolding
+
+Spin up complete Wyrmx project structures with FastAPI + Uvicorn in seconds.
+
+###  🛠 Modular Code Generation
+
+Generate controllers, services, models, schemas via simple CLI commands.
+
+### 🔧 HTTP Decorators
+
+Decorators for request methods and paths—skip repetitive endpoint wiring.
+
+### 📦 Build & Manage Projects
+
+Alembic + SQLAlchemy for migrations and ORM usage
+
+Poetry for dependency management
+
+Pyright for pre-execution type checking
+
+Pytest for testing, out of the box
+
+### 🖥 Developer-Friendly CLI
+
+No need to activate a venv each time—the CLI handles workflows.
+
+Create boilerplate, run servers, and manage migrations with clear, concise commands.
