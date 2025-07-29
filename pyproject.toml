@@ -1,6 +1,6 @@
 [project]
 name = "wyrmx-cli"
-version = "1.0.85"
+version = "1.0.86"
 description = "Wyrmx CLI is the official command-line interface for Wyrmx — a blazing-fast, Cython-accelerated, AI-enhanced web framework built on FastAPI."
 authors = [
     {name = "Yousri Aouledissa",email = "aouledissayousri@gmail.com"}

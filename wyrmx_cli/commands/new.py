@@ -133,6 +133,47 @@ def new(project_name: str):
         def createAppModule():
             appModulePath = Path(projectName)/"src"/"app_module.py"
             appModulePath.write_text("")
+        
+
+        def createConftest():
+
+            conftest = Path(projectName)/"src"/"conftest.py"
+
+            template = (
+                f"import pytest\n\n"
+                
+                f"from sqlalchemy import create_engine\n"
+                f"from sqlalchemy.orm import sessionmaker\n"
+                f"from src.schemas import *\n"
+                f"from wyrmx_core.db import DatabaseSchema\n\n"
+
+
+                f"# Use SQLite in-memory for fast tests\n"
+                f'TEST_DATABASE_URL = "sqlite:///:memory:"\n\n'
+
+
+                f"# Optional: For PostgreSQL\n"
+                f'# TEST_DATABASE_URL = "postgresql://user:pass@localhost/test_db"\n\n'
+
+
+                f"engine = create_engine(TEST_DATABASE_URL)\n"
+                f"TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)\n\n"
+
+
+                f"@pytest.fixture(scope=\"session\", autouse=True)\n"
+                f"def setup_test_db():\n"
+                f"    DatabaseSchema.metadata.create_all(bind=engine)  # Create all tables\n"
+                f"    yield\n"
+                f"    DatabaseSchema.metadata.drop_all(bind=engine)  # Drop all tables after tests\n\n"
+
+
+                f"@pytest.fixture(scope=\"function\")\n"
+                f"def db_session(): yield TestingSessionLocal\n"
+            )
+
+            conftest.write_text(template)
+
+
 
         
         def createMain():
@@ -219,6 +260,7 @@ def new(project_name: str):
 
         createSrc()
         createAppModule()
+        createConftest()
         createMain()
         createEnv()
         createMigrationScript()
