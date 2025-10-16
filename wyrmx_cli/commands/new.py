@@ -5,7 +5,7 @@ import typer
 from pathlib import Path
 from wyrmx_cli.utilities.file_utilities import insertLines, insertLine, replaceLines
 
-def new(project_name: str):
+def new(project_name: str = typer.Argument(..., help="The name of the new Wyrmx project")):
 
 
     """
@@ -80,11 +80,12 @@ def new(project_name: str):
 
         try:
 
-            for initialDependency in ["fastapi", "uvicorn", "wyrmx-core", "alembic", "python-dotenv", "pyright", "pytest"]: subprocess.run(
-                ["poetry", "add", initialDependency],
-                cwd=str(projectPath),
-                check=True
-            )
+            for initialDependency in ["fastapi", "uvicorn", "gunicorn", "wyrmx-core", "alembic", "python-dotenv", "pyright", "pytest"]: 
+                subprocess.run(
+                    ["poetry", "add", initialDependency],
+                    cwd=str(projectPath),
+                    check=True
+                )
 
         except FileNotFoundError:
 

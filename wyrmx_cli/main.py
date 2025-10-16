@@ -7,7 +7,7 @@ app = typer.Typer()
 shortcuts = typer.Typer()
 
 # main commands
-app.command()(commands.build)
+app.command()(commands.serve)
 app.command()(commands.new)
 app.command()(commands.run)
 app.command()(commands.test)

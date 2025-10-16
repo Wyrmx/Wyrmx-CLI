@@ -6,14 +6,14 @@ import typer
 
 
 def run(
-    app_module: str = "src.main:app",
-    host: str = "127.0.0.1",
-    port: int = 8000,
-    reload: bool = True
+    app_module: str = typer.Option("src.main:app", "--app", "-a", help="The Python module and ASGI app to run (e.g., src.main:app)"),
+    host: str = typer.Option("127.0.0.1", "--host", "-h", help="The host/IP address to bind the Uvicorn server to"),
+    port: int = typer.Option(8000, "--port", "-p", help="The port number to bind the Uvicorn server to"),
+    reload: bool = typer.Option(True, "--reload", "-r", help="Enable hot reloading for development with Uvicorn")
 ):
 
     """
-    Run Wyrmx Server.
+    Run Wyrmx server in test mode.
     """
     
 

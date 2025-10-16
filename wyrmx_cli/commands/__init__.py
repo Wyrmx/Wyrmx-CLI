@@ -1,4 +1,4 @@
-from wyrmx_cli.commands.build import build
+from wyrmx_cli.commands.serve import serve
 from wyrmx_cli.commands.new import new
 from wyrmx_cli.commands.test import test
 from wyrmx_cli.commands.run import run

@@ -69,7 +69,7 @@ def rollback(
             typer.secho(f"[INFO] Rollback completed: {steps} step(s) completed.", fg=typer.colors.GREEN)
 
         except subprocess.CalledProcessError as e:
-            typer.secho(f"[ERROR] Rollback failed at step {i+1}: {e.stderr or e.stdout or "Unknown error"}", fg=typer.colors.RED)
+            typer.secho(f"[ERROR] Rollback failed at step {i+1}: {e.stderr or e.stdout or "Unknown error"}", fg=typer.colors.RED) # type: ignore
 
 
 
