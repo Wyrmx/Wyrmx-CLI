@@ -1,6 +1,6 @@
 [project]
 name = "wyrmx-cli"
-version = "1.0.92"
+version = "1.0.98"
 description = "Wyrmx CLI is the official command-line interface for Wyrmx — a blazing-fast, Cython-accelerated, AI-enhanced web framework built on FastAPI."
 authors = [{ name = "Yousri Aouledissa", email = "aouledissayousri@gmail.com" }]
 
@@ -30,6 +30,11 @@ include = "wyrmx_cli"
 [tool.poetry.scripts]
 wyrmx = "wyrmx_cli.main:app"
 
+
+[tool.poetry.group.dev.dependencies]
+bandit = "^1.9.2"
+pylint = "^4.0.4"
+radon = "^6.0.1"
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]

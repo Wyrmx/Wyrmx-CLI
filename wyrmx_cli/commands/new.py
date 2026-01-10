@@ -1,6 +1,7 @@
 import subprocess
 import textwrap
 import typer
+import os
 
 from pathlib import Path
 from wyrmx_cli.utilities.file_utilities import insertLines, insertLine, replaceLines
@@ -80,7 +81,17 @@ def new(project_name: str = typer.Argument(..., help="The name of the new Wyrmx 
 
         try:
 
-            for initialDependency in ["fastapi", "uvicorn", "gunicorn", "wyrmx-core", "alembic", "python-dotenv", "pyright", "pytest"]: 
+            for initialDependency in [
+                "fastapi", 
+                "uvicorn", 
+                "gunicorn", 
+                "wyrmx-core", 
+                "alembic", 
+                "python-dotenv", 
+                "pyright", 
+                "pytest",
+                "ollama",
+            ]: 
                 subprocess.run(
                     ["poetry", "add", initialDependency],
                     cwd=str(projectPath),
@@ -127,7 +138,8 @@ def new(project_name: str = typer.Argument(..., help="The name of the new Wyrmx 
             srcPath = Path(projectName)/"src"
             srcPath.mkdir(parents=True, exist_ok=True)
         
-            for folder in ["controllers", "services", "models", "schemas", "payloads", "responses"] : (srcPath/folder).mkdir(parents=True, exist_ok=True)
+            for folder in ["controllers", "services", "models", "schemas", "payloads", "responses"] : 
+                (srcPath/folder).mkdir(parents=True, exist_ok=True)
         
 
         
@@ -256,6 +268,8 @@ def new(project_name: str = typer.Argument(..., help="The name of the new Wyrmx 
 
 
             typer.secho(f"Created Database Engine ✅", fg=typer.colors.GREEN)
+        
+        
 
 
 
@@ -265,6 +279,33 @@ def new(project_name: str = typer.Argument(..., help="The name of the new Wyrmx 
         createMain()
         createEnv()
         createMigrationScript()
+    
+
+    def initAIModels(projectName: str): 
+
+        typer.echo(f"Installing Deepseek R1 native AI model...")
+
+        AIModelsPath = Path(projectName)/"ai_models"
+
+        def createAIModelsFolder(): AIModelsPath.mkdir(parents=True, exist_ok=True)
+        
+        def installAIModels():
+
+            env = os.environ.copy()
+            env["OLLAMA_HOME"] = str(AIModelsPath)
+
+            subprocess.run(
+                ["poetry", "run", "ollama", "pull", "deepseek-r1"],
+                cwd=str(AIModelsPath),
+                check=True
+            )
+        
+        createAIModelsFolder()
+        installAIModels()
+        
+        typer.secho(f"Installed Deepseek R1 Native AI model ✅", fg=typer.colors.GREEN)
+
+
 
 
         
@@ -291,4 +332,5 @@ def new(project_name: str = typer.Argument(..., help="The name of the new Wyrmx 
     initDependencies(projectName)
     updateGitignore(projectName)
     initSourceCode(projectName)
+    initAIModels(projectName)
     initGit(projectName)
