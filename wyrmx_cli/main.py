@@ -11,6 +11,7 @@ app.command()(commands.serve)
 app.command()(commands.new)
 app.command()(commands.run)
 app.command()(commands.test)
+app.command()(commands.vibe)
 
 # file generation commands
 app.command("generate:controller")(generate_controller)

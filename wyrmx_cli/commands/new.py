@@ -1,7 +1,6 @@
 import subprocess
 import textwrap
 import typer
-import os
 
 from pathlib import Path
 from wyrmx_cli.utilities.file_utilities import insertLines, insertLine, replaceLines
