@@ -90,7 +90,8 @@ def new(project_name: str = typer.Argument(..., help="The name of the new Wyrmx 
                 "python-dotenv", 
                 "pyright", 
                 "pytest",
-                "ollama",
+                # "ollama",
+                # "huggingface_hub"
             ]: 
                 subprocess.run(
                     ["poetry", "add", initialDependency],
@@ -127,6 +128,9 @@ def new(project_name: str = typer.Argument(..., help="The name of the new Wyrmx 
 
                 # Bytecode cache
                 **/__pycache__/**
+                            
+                # AI Models
+                ai_models/
             """)
         )
     
@@ -279,26 +283,47 @@ def new(project_name: str = typer.Argument(..., help="The name of the new Wyrmx 
         createMain()
         createEnv()
         createMigrationScript()
+
+
+    def initGit(projectName: str):
+
+        subprocess.run(
+            ["git", "init"],
+            cwd=str(Path(projectName)),
+            check=True
+        )
     
 
     def initAIModels(projectName: str): 
 
+
         typer.echo(f"Installing Deepseek R1 native AI model...")
 
         AIModelsPath = Path(projectName)/"ai_models"
-
         def createAIModelsFolder(): AIModelsPath.mkdir(parents=True, exist_ok=True)
         
         def installAIModels():
+            import logging
+            from huggingface_hub import snapshot_download
+            
+            logging.basicConfig(level=logging.INFO)
 
-            env = os.environ.copy()
-            env["OLLAMA_HOME"] = str(AIModelsPath)
+            token = typer.prompt(
+                "Enter your Hugging Face token (leave blank to download anonymously)",
+                hide_input=True
+            ) or None
+            
 
-            subprocess.run(
-                ["poetry", "run", "ollama", "pull", "deepseek-r1"],
-                cwd=str(AIModelsPath),
-                check=True
+            snapshot_download(
+                repo_id="deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B",        
+                local_dir=str(AIModelsPath / "deepseek-r1"),           
+                allow_patterns=None,                                    
+                ignore_patterns=None,                                   
+                force_download=False,
+                token=token                                   
             )
+
+            
         
         createAIModelsFolder()
         installAIModels()
@@ -310,13 +335,7 @@ def new(project_name: str = typer.Argument(..., help="The name of the new Wyrmx 
 
         
             
-    def initGit(projectName: str):
-
-        subprocess.run(
-            ["git", "init"],
-            cwd=str(Path(projectName)),
-            check=True
-        )
+    
         
 
 
@@ -332,5 +351,5 @@ def new(project_name: str = typer.Argument(..., help="The name of the new Wyrmx 
     initDependencies(projectName)
     updateGitignore(projectName)
     initSourceCode(projectName)
-    initAIModels(projectName)
     initGit(projectName)
+    initAIModels(projectName)
