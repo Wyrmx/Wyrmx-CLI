@@ -305,7 +305,7 @@ def new(project_name: str = typer.Argument(..., help="The name of the new Wyrmx 
         def installAIModels():
             import logging
             from huggingface_hub import snapshot_download
-            
+
             logging.basicConfig(level=logging.INFO)
 
             token = typer.prompt(
@@ -352,4 +352,4 @@ def new(project_name: str = typer.Argument(..., help="The name of the new Wyrmx 
     updateGitignore(projectName)
     initSourceCode(projectName)
     initGit(projectName)
-    initAIModels(projectName)
+    #initAIModels(projectName)
