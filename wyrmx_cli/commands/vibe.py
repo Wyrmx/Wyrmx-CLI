@@ -190,6 +190,18 @@ Rules:
 5. Never generate instructions or notes—strictly code artifacts.
 
 
+
+15. Decorator & HTTP Rules
+--------------------------
+1. @controller, @service, @model, @schema must always be imported from wyrmx_core.decorators.
+   Example: from wyrmx_core.decorators import controller, service, model, schema
+
+2. HTTP method decorators @get, @post, @patch, @put, @delete must always be imported from wyrmx_core.http.
+   Example: from wyrmx_core.http import get, post, patch, put, delete
+3. Never invent new decorators or import them from other sources.
+4. Always use these decorators consistently according to the Wyrmx conventions.
+
+
 16. Path Parameter Rules
 ------------------------
 1. The @controller decorator must always include a string parameter that represents the controller's base path.
@@ -288,11 +300,11 @@ def vibe(
             model="openai/gpt-4.1"
         )
 
-        print(f'Result: \n{response.choices[0].message.content}')
         return response.choices[0].message.content
 
 
     def LLMShellExecuteCommands(prompt: str):
+        import re
 
         # Step 1: Generate a list of commands from the LLM and execute them sequentially
         shellCommandsPrompts = (
@@ -320,11 +332,12 @@ def vibe(
 
             # Step 3: Generate actual code content for the file
             codePrompt = f"Generate the Python code for the file at '{filePath}' for task: '{prompt}'"
-            codeContent = generateContent(codePrompt).strip()
+            codeContent: list[str] = re.findall(r"```(.*?)```", generateContent(codePrompt), re.DOTALL)
+
 
             # Step 4: Write DeepSeek content to the file
             os.makedirs(os.path.dirname(filePath), exist_ok=True)
-            with open(filePath, "w", encoding="utf-8") as file: file.write(codeContent)
+            with open(filePath, "w", encoding="utf-8") as file: file.write(codeContent[0].strip())
 
             typer.secho(f"File written: {filePath} ✅", fg=typer.colors.GREEN)
     
